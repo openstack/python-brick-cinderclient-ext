@@ -1,0 +1,7 @@
+[run]
+branch = True
+source = brick-python-cinderclient-ext
+omit = brick-python-cinderclient-ext/openstack/*
+
+[report]
+ignore_errors = True
