@@ -55,3 +55,7 @@ def do_get_connector(client, args):
     connector = brickclient.get_connector(args.multipath,
                                           args.enforce_multipath)
     utils.print_dict(connector)
+
+
+manager_class = brick_client.Client
+name = 'assisted_volume_snapshots'
