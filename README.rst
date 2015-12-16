@@ -1,19 +1,31 @@
-===============================
-brick-python-cinderclient-ext
-===============================
+=============================
+python-brick-cinderclient-ext
+=============================
 
-OpenStack Boilerplate contains all the boilerplate you need to create an OpenStack package.
-
-Please feel here a long description which must be at least 3 lines wrapped on
-80 cols, so that distribution package maintainers can use it in their packages.
-Note that this is a hard requirement.
-
-* Free software: Apache license
-* Documentation: http://docs.openstack.org/developer/brick-python-cinderclient-ext
-* Source: http://git.openstack.org/cgit/openstack/brick-python-cinderclient-ext
-* Bugs: http://bugs.launchpad.net/cinder
+OpenStack Cinder Brick client for local volume attachement
 
 Features
 --------
 
-* TODO
+* Get volume connector information
+
+
+Dependencies
+------------
+
+Depends on Cinder driver's protocol, python-brickclient could require following
+packages::
+
+* open-iscsi - for volume attachment via iSCSI
+* ceph-common - for volume attachment via iSCSI (Ceph)
+* nfs-common - for volume attachment using NFS protocol
+
+For any other imformation, refer to the parent projects, Cinder and
+python-cinderclient:::
+*  https://github.com/openstack/cinder
+*  https://github.com/openstack/python-cinderclient
+
+* License: Apache License, Version 2.0
+* Documentation: http://docs.openstack.org/developer/python-brick-cinderclient-ext
+* Source: http://git.openstack.org/cgit/openstack/python-brick-cinderclient-ext
+* Bugs: http://bugs.launchpad.net/python-cinderclient
