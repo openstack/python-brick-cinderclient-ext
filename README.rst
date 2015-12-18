@@ -13,15 +13,19 @@ Features
 Dependencies
 ------------
 
-Depends on Cinder driver's protocol, python-brickclient could require following
-packages::
+Requires dependency::
+
+* python-cinderclient
+
+Optional dependencies based on Cinder driver's protocol::
 
 * open-iscsi - for volume attachment via iSCSI
 * ceph-common - for volume attachment via iSCSI (Ceph)
 * nfs-common - for volume attachment using NFS protocol
 
 For any other imformation, refer to the parent projects, Cinder and
-python-cinderclient:::
+python-cinderclient::
+
 *  https://github.com/openstack/cinder
 *  https://github.com/openstack/python-cinderclient
 
