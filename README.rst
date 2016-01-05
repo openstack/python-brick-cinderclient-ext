@@ -26,8 +26,8 @@ Optional dependencies based on Cinder driver's protocol::
 For any other imformation, refer to the parent projects, Cinder and
 python-cinderclient::
 
-*  https://github.com/openstack/cinder
-*  https://github.com/openstack/python-cinderclient
+*  https://git.openstack.org/cgit/openstack/cinder
+*  https://git.openstack.org/cgit/openstack/python-cinderclient
 
 * License: Apache License, Version 2.0
 * Documentation: http://docs.openstack.org/developer/python-brick-cinderclient-ext
