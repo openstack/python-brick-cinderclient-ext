@@ -23,7 +23,7 @@ Optional dependencies based on Cinder driver's protocol::
 * ceph-common - for volume attachment via iSCSI (Ceph)
 * nfs-common - for volume attachment using NFS protocol
 
-For any other imformation, refer to the parent projects, Cinder and
+For any other information, refer to the parent projects, Cinder and
 python-cinderclient::
 
 *  https://git.openstack.org/cgit/openstack/cinder
