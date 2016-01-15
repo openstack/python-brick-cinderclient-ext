@@ -39,6 +39,32 @@ class TestBrickClient(base.BaseTestCase):
                                           enforce_multipath=False,
                                           multipath=False)
 
+    def _init_fake_cinderclient(self, protocol):
+        # Init fake cinderclient
+        self.mock_vc = mock.MagicMock()
+        conn_data = {'key': 'value'}
+        connection = {'driver_volume_type': protocol, 'data': conn_data}
+        self.mock_vc.volumes.initialize_connection.return_value = connection
+        mock_vol = mock.MagicMock()
+        mock_vol.id = self.volume_id
+        mock_vol.name = 'fake-vol'
+        mock_vol.status = 'in-use'
+        self.mock_vc.volumes.list.return_value = [mock_vol]
+        self.client.volumes_client = self.mock_vc
+        return connection
+
+    def _init_fake_os_brick(self, mock_conn_prop):
+        # Init fakes for os-brick
+        conn_props = mock.Mock()
+        mock_conn_prop.return_value = conn_props
+        mock_connector = mock.MagicMock()
+        mock_connect = mock.Mock()
+        mock_connector.return_value = mock_connect
+        self.client._brick_get_connector = mock_connector
+        mock_connect.connect_volume = mock.Mock()
+
+        return conn_props, mock_connect
+
     @mock.patch('brick_cinderclient_ext.brick_utils.get_my_ip')
     @mock.patch('brick_cinderclient_ext.brick_utils.get_root_helper')
     @mock.patch('os_brick.initiator.connector.get_connector_properties')
@@ -51,3 +77,23 @@ class TestBrickClient(base.BaseTestCase):
         mock_connector.assert_called_with('root-helper', '1.0.0.0',
                                           enforce_multipath=True,
                                           multipath=True)
+
+    @mock.patch('os_brick.initiator.connector.get_connector_properties')
+    def test_get_volume_paths(self, mock_conn_prop):
+        connection = self._init_fake_cinderclient('iscsi')
+        conn_props, m_connect = self._init_fake_os_brick(mock_conn_prop)
+        self.client.get_volume_paths(self.volume_id, use_multipath=False)
+        self.mock_vc.volumes.initialize_connection.assert_called_with(
+            self.volume_id, conn_props)
+        self.client._brick_get_connector.assert_called_with(
+            connection['driver_volume_type'], use_multipath=False)
+        m_connect.get_volume_paths.assert_called_with(connection['data'])
+
+    @mock.patch('os_brick.initiator.connector.get_connector_properties')
+    def test_get_all_volume_paths(self, mock_conn_prop):
+        protocol = 'iscsi'
+        conn_props, m_connect = self._init_fake_os_brick(mock_conn_prop)
+        self.client.get_all_volume_paths(protocol, use_multipath=False)
+        self.client._brick_get_connector.assert_called_with(
+            protocol, use_multipath=False)
+        m_connect.get_all_available_volumes.assert_called_with()

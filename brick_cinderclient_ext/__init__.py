@@ -30,6 +30,7 @@ __version__ = pbr.version.VersionInfo(
     'brick-python-cinderclient-ext').version_string()
 
 
+VOLUME_ID_HELP_MESSAGE = 'Name or other Identifier for existing volume'
 MULTIPATH_HELP_MESSAGE = ('Set True if connector wants to use multipath.'
                           'Default value is False.')
 ENFORCE_MULTIPATH_HELP_MESSAGE = (
@@ -56,6 +57,41 @@ def do_get_connector(client, args):
                                           args.enforce_multipath)
     utils.print_dict(connector)
 
+
+@utils.arg('identifier',
+           metavar='<identifier>',
+           help=VOLUME_ID_HELP_MESSAGE)
+@utils.arg('--multipath',
+           metavar='<multipath>',
+           default=False,
+           help=MULTIPATH_HELP_MESSAGE)
+@utils.service_type('volumev2')
+def do_get_volume_paths(client, args):
+    """Get volume paths for a volume."""
+    volume = args.identifier
+    brickclient = brick_client.Client(client)
+
+    paths = brickclient.get_volume_paths(volume, args.multipath)
+    if paths:
+        print('\n'.join(paths))
+
+
+@utils.arg('--multipath',
+           metavar='<multipath>',
+           default=False,
+           help=MULTIPATH_HELP_MESSAGE)
+@utils.arg('--protocol',
+           metavar='<protocol>',
+           default='ISCSI',
+           help='Connection protocol. ISCSI, FIBRE_CHANNEL, etc.')
+@utils.service_type('volumev2')
+def do_get_all_volume_paths(client, args):
+    """Get all volume paths for a protocol."""
+    brickclient = brick_client.Client(client)
+
+    paths = brickclient.get_all_volume_paths(args.protocol, args.multipath)
+    if paths:
+        print('\n'.join(paths))
 
 manager_class = brick_client.Client
 name = 'brick_local_volume_management'
