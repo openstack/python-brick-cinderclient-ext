@@ -58,4 +58,4 @@ def do_get_connector(client, args):
 
 
 manager_class = brick_client.Client
-name = 'assisted_volume_snapshots'
+name = 'brick_local_volume_management'
