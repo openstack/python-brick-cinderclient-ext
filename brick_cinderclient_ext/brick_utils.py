@@ -14,7 +14,10 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
+import os
 import socket
+
+from cinderclient import exceptions
 
 
 def get_my_ip():
@@ -31,3 +34,12 @@ def get_my_ip():
 def get_root_helper():
     # NOTE (e0ne): We don't use rootwrap now
     return 'sudo'
+
+
+def require_root(f):
+    def wrapper(*args, **kwargs):
+        if os.getuid() != 0:
+            raise exceptions.CommandError(
+                "This command requies root permissions.")
+        return f(*args, **kwargs)
+    return wrapper

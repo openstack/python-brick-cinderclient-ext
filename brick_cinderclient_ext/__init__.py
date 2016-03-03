@@ -22,6 +22,7 @@ import logging
 
 import pbr.version
 
+from brick_cinderclient_ext import brick_utils
 from brick_cinderclient_ext import client as brick_client
 from cinderclient import utils
 
@@ -50,6 +51,7 @@ logger = logging.getLogger(__name__)
            metavar='<enforce_multipath>',
            default=False,
            help=ENFORCE_MULTIPATH_HELP_MESSAGE)
+@brick_utils.require_root
 def do_get_connector(client, args):
     """Get the connection properties for all protocols."""
     brickclient = brick_client.Client(client)
@@ -66,6 +68,7 @@ def do_get_connector(client, args):
            default=False,
            help=MULTIPATH_HELP_MESSAGE)
 @utils.service_type('volumev2')
+@brick_utils.require_root
 def do_get_volume_paths(client, args):
     """Get volume paths for a volume."""
     volume = args.identifier
@@ -85,6 +88,7 @@ def do_get_volume_paths(client, args):
            default='ISCSI',
            help='Connection protocol. ISCSI, FIBRE_CHANNEL, etc.')
 @utils.service_type('volumev2')
+@brick_utils.require_root
 def do_get_all_volume_paths(client, args):
     """Get all volume paths for a protocol."""
     brickclient = brick_client.Client(client)
