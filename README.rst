@@ -19,9 +19,9 @@ Requires dependency::
 
 Optional dependencies based on Cinder driver's protocol::
 
-* open-iscsi - for volume attachment via iSCSI
-* ceph-common - for volume attachment via iSCSI (Ceph)
-* nfs-common - for volume attachment using NFS protocol
+* open-iscsi, udev - for volume attachment via iSCSI
+
+NOTE (e0ne): current version is tested only on Linux hosts
 
 For any other information, refer to the parent projects, Cinder and
 python-cinderclient::

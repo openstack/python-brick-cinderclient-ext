@@ -26,19 +26,6 @@ class TestBrickClient(base.BaseTestCase):
         self.hostname = 'hostname'
         self.client = client.Client()
 
-    @mock.patch('brick_cinderclient_ext.brick_utils.get_my_ip')
-    @mock.patch('brick_cinderclient_ext.brick_utils.get_root_helper')
-    @mock.patch('os_brick.initiator.connector.get_connector_properties')
-    def test_get_connector(self, mock_connector, mock_root_helper,
-                           mock_my_ip):
-        mock_root_helper.return_value = 'root-helper'
-        mock_my_ip.return_value = '1.0.0.0'
-
-        self.client.get_connector()
-        mock_connector.assert_called_with('root-helper', '1.0.0.0',
-                                          enforce_multipath=False,
-                                          multipath=False)
-
     def _init_fake_cinderclient(self, protocol):
         # Init fake cinderclient
         self.mock_vc = mock.MagicMock()
@@ -65,18 +52,56 @@ class TestBrickClient(base.BaseTestCase):
 
         return conn_props, mock_connect
 
+    @mock.patch('oslo_concurrency.processutils.execute')
+    @mock.patch('brick_cinderclient_ext.brick_utils.get_my_ip')
+    @mock.patch('brick_cinderclient_ext.brick_utils.get_root_helper')
+    @mock.patch('os_brick.initiator.connector.get_connector_properties')
+    def test_get_connector(self, mock_connector, mock_root_helper,
+                           mock_my_ip, mock_execute):
+        mock_root_helper.return_value = 'root-helper'
+        mock_my_ip.return_value = '1.0.0.0'
+
+        self.client.get_connector()
+        mock_connector.assert_called_with('root-helper', '1.0.0.0',
+                                          enforce_multipath=False,
+                                          multipath=False,
+                                          execute=mock_execute)
+
+    @mock.patch('oslo_concurrency.processutils.execute')
     @mock.patch('brick_cinderclient_ext.brick_utils.get_my_ip')
     @mock.patch('brick_cinderclient_ext.brick_utils.get_root_helper')
     @mock.patch('os_brick.initiator.connector.get_connector_properties')
     def test_get_connector_with_multipath(self, mock_connector,
-                                          mock_root_helper, mock_my_ip):
+                                          mock_root_helper, mock_my_ip,
+                                          mock_execute):
         mock_root_helper.return_value = 'root-helper'
         mock_my_ip.return_value = '1.0.0.0'
 
         self.client.get_connector(True, True)
         mock_connector.assert_called_with('root-helper', '1.0.0.0',
                                           enforce_multipath=True,
-                                          multipath=True)
+                                          multipath=True,
+                                          execute=mock_execute)
+
+    @mock.patch('os_brick.initiator.connector.get_connector_properties')
+    def test_attach_iscsi(self, mock_conn_prop):
+        connection = self._init_fake_cinderclient('iscsi')
+        conn_props, mock_connect = self._init_fake_os_brick(mock_conn_prop)
+
+        self.client.attach(self.volume_id, self.hostname)
+        self.mock_vc.volumes.initialize_connection.assert_called_with(
+            self.volume_id, conn_props)
+        mock_connect.connect_volume.assert_called_with(connection['data'])
+
+    @mock.patch('os_brick.initiator.connector.get_connector_properties')
+    def test_detach_iscsi(self, mock_conn_prop):
+        connection = self._init_fake_cinderclient('iscsi')
+        conn_props, m_connect = self._init_fake_os_brick(mock_conn_prop)
+
+        self.client.detach(self.volume_id)
+        self.mock_vc.volumes.initialize_connection.assert_called_with(
+            self.volume_id, conn_props)
+        m_connect.disconnect_volume.assert_called_with(connection['data'], {})
 
     @mock.patch('os_brick.initiator.connector.get_connector_properties')
     def test_get_volume_paths(self, mock_conn_prop):

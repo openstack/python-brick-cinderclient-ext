@@ -18,6 +18,7 @@ import os
 import socket
 
 from cinderclient import exceptions
+from oslo_concurrency import processutils
 
 
 def get_my_ip():
@@ -43,3 +44,14 @@ def require_root(f):
                 "This command requies root permissions.")
         return f(*args, **kwargs)
     return wrapper
+
+
+def safe_execute(cmd):
+    try:
+        processutils.execute(*cmd, root_helper=get_root_helper(),
+                             run_as_root=True)
+    except processutils.ProcessExecutionError as e:
+        print('Command "{0}" execution returned {1} exit code:'.format(
+              e.cmd, e.exit_code))
+        print('Stderr: {0}'.format(e.stderr))
+        print('Stdout: {0}'.format(e.stdout))
