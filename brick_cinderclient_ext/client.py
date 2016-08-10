@@ -13,11 +13,11 @@
 from __future__ import print_function
 
 from cinderclient import exceptions
-
 from os_brick.initiator import connector
 from oslo_concurrency import processutils
 
 from brick_cinderclient_ext import brick_utils
+from brick_cinderclient_ext import volume_actions as actions
 
 
 class Client(object):
@@ -50,8 +50,50 @@ class Client(object):
             brick_utils.get_root_helper(),
             brick_utils.get_my_ip(),
             multipath=multipath,
-            enforce_multipath=(enforce_multipath))
+            enforce_multipath=(enforce_multipath),
+            execute=processutils.execute)
         return conn_prop
+
+    def attach(self, volume_id, hostname, mountpoint=None, mode='rw',
+               multipath=False, enforce_multipath=False):
+
+        # Reserve volume before attachment
+        with actions.Reserve(self.volumes_client, volume_id) as cmd:
+            cmd.reserve()
+
+        with actions.InitializeConnection(
+                self.volumes_client, volume_id) as cmd:
+            connection = cmd.initialize(self, multipath, enforce_multipath)
+
+        with actions.VerifyProtocol(self.volumes_client, volume_id) as cmd:
+            cmd.verify(connection['driver_volume_type'])
+
+        with actions.ConnectVolume(self.volumes_client, volume_id) as cmd:
+            brick_connector = self._brick_get_connector(
+                connection['driver_volume_type'], is_local=True)
+            device_info = cmd.connect(brick_connector,
+                                      connection['data'],
+                                      mountpoint, mode, hostname)
+            return device_info
+
+    def detach(self, volume_id, attachment_uuid=None, multipath=False,
+               enforce_multipath=False, device_info=None):
+
+        with actions.BeginDetach(self.volumes_client, volume_id) as cmd:
+            cmd.reserve()
+
+        with actions.InitializeConnectionForDetach(
+                self.volumes_client, volume_id) as cmd:
+            connection = cmd.initialize(self, multipath, enforce_multipath)
+
+        brick_connector = self._brick_get_connector(
+            connection['driver_volume_type'], is_local=True)
+
+        with actions.DisconnectVolume(self.volumes_client, volume_id) as cmd:
+            cmd.disconnect(brick_connector, connection['data'], device_info)
+
+        with actions.DetachVolume(self.volumes_client, volume_id) as cmd:
+            cmd.detach(self, attachment_uuid, multipath, enforce_multipath)
 
     def get_volume_paths(self, volume_id, use_multipath=False):
         """Gets volume paths on the system for a specific volume."""

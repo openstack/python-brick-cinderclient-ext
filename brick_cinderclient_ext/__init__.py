@@ -18,7 +18,9 @@ Command-line interface to the os-brick.
 """
 
 from __future__ import print_function
+import json
 import logging
+import socket
 
 import pbr.version
 
@@ -58,6 +60,76 @@ def do_get_connector(client, args):
     connector = brickclient.get_connector(args.multipath,
                                           args.enforce_multipath)
     utils.print_dict(connector)
+
+
+@utils.arg('identifier',
+           metavar='<identifier>',
+           help=VOLUME_ID_HELP_MESSAGE)
+@utils.service_type('volumev2')
+@utils.arg('--hostname',
+           metavar='<hostname>',
+           default=socket.gethostname(),
+           help='hostname')
+@utils.arg('--mountpoint',
+           metavar='<mountpoint>',
+           default=None,
+           help='mountpoint')
+@utils.arg('--mode',
+           metavar='<mode>',
+           default='rw',
+           help='mode')
+@utils.arg('--multipath',
+           metavar='<multipath>',
+           default=False,
+           help=MULTIPATH_HELP_MESSAGE)
+@utils.arg('--enforce_multipath',
+           metavar='<enforce_multipath>',
+           default=False,
+           help=ENFORCE_MULTIPATH_HELP_MESSAGE)
+@utils.service_type('volumev2')
+def do_local_attach(client, args):
+    hostname = args.hostname
+    volume = args.identifier
+    brickclient = brick_client.Client(client)
+    device_info = brickclient.attach(volume,
+                                     hostname,
+                                     args.mountpoint,
+                                     args.mode,
+                                     args.multipath,
+                                     args.enforce_multipath)
+
+    utils.print_dict(device_info)
+
+
+@utils.arg('identifier',
+           metavar='<identifier>',
+           help=VOLUME_ID_HELP_MESSAGE)
+@utils.arg('--attachment_uuid',
+           metavar='<attachment_uuid>',
+           default=None,
+           help='The uuid of the volume attachment.')
+@utils.arg('--multipath',
+           metavar='<multipath>',
+           default=False,
+           help=MULTIPATH_HELP_MESSAGE)
+@utils.arg('--enforce_multipath',
+           metavar='<enforce_multipath>',
+           default=False,
+           help=ENFORCE_MULTIPATH_HELP_MESSAGE)
+@utils.arg('--device_info',
+           metavar='<device_info>',
+           default=None,
+           help='The device_info is returned from connect_volume.')
+@utils.service_type('volumev2')
+def do_local_detach(client, args):
+    volume = args.identifier
+    brickclient = brick_client.Client(client)
+    device_info = None
+    if args.device_info:
+        device_info = json.joads(args.device_info)
+
+    brickclient.detach(volume, args.attachment_uuid, args.multipath,
+                       args.enforce_multipath, device_info)
 
 
 @utils.arg('identifier',
