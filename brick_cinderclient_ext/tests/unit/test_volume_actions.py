@@ -56,7 +56,7 @@ class TestVolumeActions(base.BaseTestCase):
         self.v_client.volumes.initialize_connection.assert_called_once_with(
             self.volume_id, None)
 
-    @ddt.data('iscsi', 'iSCSI', 'ISCSI')
+    @ddt.data('iscsi', 'iSCSI', 'ISCSI', 'rbd', 'RBD')
     def test_verify_protocol(self, protocol):
         with volume_actions.VerifyProtocol(*self.command_args) as cmd:
             # NOTE(e0ne): veryfy that no exception is rased

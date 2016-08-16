@@ -70,7 +70,7 @@ class Client(object):
 
         with actions.ConnectVolume(self.volumes_client, volume_id) as cmd:
             brick_connector = self._brick_get_connector(
-                connection['driver_volume_type'], is_local=True)
+                connection['driver_volume_type'], do_local_attach=True)
             device_info = cmd.connect(brick_connector,
                                       connection['data'],
                                       mountpoint, mode, hostname)
@@ -87,7 +87,7 @@ class Client(object):
             connection = cmd.initialize(self, multipath, enforce_multipath)
 
         brick_connector = self._brick_get_connector(
-            connection['driver_volume_type'], is_local=True)
+            connection['driver_volume_type'], do_local_attach=True)
 
         with actions.DisconnectVolume(self.volumes_client, volume_id) as cmd:
             cmd.disconnect(brick_connector, connection['data'], device_info)
