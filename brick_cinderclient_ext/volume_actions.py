@@ -42,9 +42,9 @@ class InitializeConnection(VolumeAction):
 
 
 class VerifyProtocol(VolumeAction):
-    # NOTE(e0ne): iSCSI drivers works without issues, RBD and NFS don't
+    # NOTE(e0ne): Only iSCSI and RBD based drivers are supported. NFS doesn't
     # work. Drivers with other protocols are not tested yet.
-    SUPPORTED_PROCOTOLS = [connector.ISCSI]
+    SUPPORTED_PROCOTOLS = [connector.ISCSI, connector.RBD]
 
     def verify(self, protocol):
         protocol = protocol.upper()
