@@ -1,0 +1,3 @@
+---
+features:
+  - Require root permissions for local-attach and local-detach CLI operations

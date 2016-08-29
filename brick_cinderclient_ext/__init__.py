@@ -87,6 +87,7 @@ def do_get_connector(client, args):
            default=False,
            help=ENFORCE_MULTIPATH_HELP_MESSAGE)
 @utils.service_type('volumev2')
+@brick_utils.require_root
 def do_local_attach(client, args):
     hostname = args.hostname
     volume = args.identifier
@@ -121,6 +122,7 @@ def do_local_attach(client, args):
            default=None,
            help='The device_info is returned from connect_volume.')
 @utils.service_type('volumev2')
+@brick_utils.require_root
 def do_local_detach(client, args):
     volume = args.identifier
     brickclient = brick_client.Client(client)
