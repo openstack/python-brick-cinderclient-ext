@@ -1,0 +1,7 @@
+---
+features:
+  - Local attach/detach features implemented
+    Introduced new Python and CLI APIs to attach Cinder volumes to any host
+    including baremetal instances and containers.
+    Current implementation supports only iSCSI and RBD protocols and it was
+    tested only on Linux hosts.
