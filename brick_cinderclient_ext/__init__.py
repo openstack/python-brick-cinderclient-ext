@@ -19,7 +19,6 @@ Command-line interface to the os-brick.
 
 from __future__ import print_function
 import json
-import logging
 import socket
 
 import pbr.version
@@ -40,9 +39,6 @@ ENFORCE_MULTIPATH_HELP_MESSAGE = (
     'If enforce_multipath=True is specified too, an exception is thrown when '
     'multipathd is not running. Otherwise, it falls back to multipath=False '
     'and only the first path shown up is used.')
-
-logging.basicConfig()
-logger = logging.getLogger(__name__)
 
 
 @utils.arg('--multipath',
