@@ -29,7 +29,7 @@ from cinderclient import utils
 
 
 __version__ = pbr.version.VersionInfo(
-    'brick-python-cinderclient-ext').version_string()
+    'python-brick-cinderclient-ext').version_string()
 
 
 VOLUME_ID_HELP_MESSAGE = 'Name or other Identifier for existing volume'
