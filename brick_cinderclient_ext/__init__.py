@@ -124,7 +124,7 @@ def do_local_detach(client, args):
     brickclient = brick_client.Client(client)
     device_info = None
     if args.device_info:
-        device_info = json.joads(args.device_info)
+        device_info = json.loads(args.device_info)
 
     brickclient.detach(volume, args.attachment_uuid, args.multipath,
                        args.enforce_multipath, device_info)
