@@ -28,11 +28,11 @@ class TestBrickClient(base.BaseTestCase):
 
     def _init_fake_cinderclient(self, protocol):
         # Init fake cinderclient
-        self.mock_vc = mock.MagicMock()
+        self.mock_vc = mock.Mock()
         conn_data = {'key': 'value'}
         connection = {'driver_volume_type': protocol, 'data': conn_data}
         self.mock_vc.volumes.initialize_connection.return_value = connection
-        mock_vol = mock.MagicMock()
+        mock_vol = mock.Mock()
         mock_vol.id = self.volume_id
         mock_vol.name = 'fake-vol'
         mock_vol.status = 'in-use'
@@ -44,7 +44,7 @@ class TestBrickClient(base.BaseTestCase):
         # Init fakes for os-brick
         conn_props = mock.Mock()
         mock_conn_prop.return_value = conn_props
-        mock_connector = mock.MagicMock()
+        mock_connector = mock.Mock()
         mock_connect = mock.Mock()
         mock_connector.return_value = mock_connect
         self.client._brick_get_connector = mock_connector
