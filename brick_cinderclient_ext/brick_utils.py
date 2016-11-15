@@ -41,7 +41,7 @@ def require_root(f):
     def wrapper(*args, **kwargs):
         if os.getuid() != 0:
             raise exceptions.CommandError(
-                "This command requies root permissions.")
+                "This command requires root permissions.")
         return f(*args, **kwargs)
     return wrapper
 
