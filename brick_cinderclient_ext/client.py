@@ -57,6 +57,16 @@ class Client(object):
     def attach(self, volume_id, hostname, mountpoint=None, mode='rw',
                multipath=False, enforce_multipath=False):
 
+        # Check protocol type of storage backend.
+        with actions.VerifyProtocol(self.volumes_client, volume_id) as cmd:
+            # Retrieve vol-host attribute of volume.
+            volume_info = self.volumes_client.volumes.get(volume_id)
+            volume_capabilities = self.volumes_client.capabilities.get(
+                volume_info.__dict__['os-vol-host-attr:host'])
+            # Retrieve storage_protocol from storage backend capabilities.
+            protocol = volume_capabilities.storage_protocol.upper()
+            cmd.verify(protocol)
+
         # Reserve volume before attachment
         with actions.Reserve(self.volumes_client, volume_id) as cmd:
             cmd.reserve()
@@ -65,12 +75,9 @@ class Client(object):
                 self.volumes_client, volume_id) as cmd:
             connection = cmd.initialize(self, multipath, enforce_multipath)
 
-        with actions.VerifyProtocol(self.volumes_client, volume_id) as cmd:
-            cmd.verify(connection['driver_volume_type'])
-
         with actions.ConnectVolume(self.volumes_client, volume_id) as cmd:
             brick_connector = self._brick_get_connector(
-                connection['driver_volume_type'], do_local_attach=True)
+                protocol, do_local_attach=True)
             device_info = cmd.connect(brick_connector,
                                       connection['data'],
                                       mountpoint, mode, hostname)

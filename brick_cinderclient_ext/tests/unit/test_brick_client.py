@@ -17,6 +17,7 @@ import mock
 from oslotest import base
 
 from brick_cinderclient_ext import client
+from cinderclient.v2.volumes import Volume
 
 
 class TestBrickClient(base.BaseTestCase):
@@ -32,11 +33,17 @@ class TestBrickClient(base.BaseTestCase):
         conn_data = {'key': 'value'}
         connection = {'driver_volume_type': protocol, 'data': conn_data}
         self.mock_vc.volumes.initialize_connection.return_value = connection
-        mock_vol = mock.Mock()
-        mock_vol.id = self.volume_id
-        mock_vol.name = 'fake-vol'
-        mock_vol.status = 'in-use'
-        self.mock_vc.volumes.list.return_value = [mock_vol]
+        fake_vol = Volume(self, {
+            'id': self.volume_id,
+            'name': 'fake-volume',
+            'status': 'in-use',
+            'os-vol-host-attr:host': 'host@lvmdriver-1#lvmdriver-1'},
+            loaded=True)
+        self.mock_vc.volumes.list.return_value = [fake_vol]
+        self.mock_vc.volumes.get.return_value = fake_vol
+        mock_capabilities = mock.Mock()
+        mock_capabilities.storage_protocol = 'iSCSI'
+        self.mock_vc.capabilities.get.return_value = mock_capabilities
         self.client.volumes_client = self.mock_vc
         return connection
 
