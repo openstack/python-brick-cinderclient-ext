@@ -21,7 +21,17 @@ from brick_cinderclient_ext import volume_actions as actions
 
 
 class Client(object):
-    version = '1.1.0'
+    """Python client for os-brick
+
+    Version history:
+
+        1.0.0 - Initial version
+        1.1.0 - Query volume paths implementation
+        1.2.0 - Add --nic attribute to get-connector
+
+    """
+
+    version = '1.2.0'
 
     def __init__(self, volumes_client=None):
         self.volumes_client = volumes_client
@@ -45,10 +55,11 @@ class Client(object):
             device_scan_attempts=device_scan_attempts,
             *args, **kwargs)
 
-    def get_connector(self, multipath=False, enforce_multipath=False):
+    def get_connector(self, multipath=False, enforce_multipath=False,
+                      nic=None):
         conn_prop = connector.get_connector_properties(
             brick_utils.get_root_helper(),
-            brick_utils.get_my_ip(),
+            brick_utils.get_ip(nic),
             multipath=multipath,
             enforce_multipath=(enforce_multipath),
             execute=processutils.execute)

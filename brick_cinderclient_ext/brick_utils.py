@@ -1,4 +1,3 @@
-
 # Copyright 2011-2014 OpenStack Foundation
 # All Rights Reserved.
 #
@@ -14,9 +13,11 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
+import netifaces
 import os
 import socket
 
+from brick_cinderclient_ext import exceptions as exc
 from cinderclient import exceptions
 from oslo_concurrency import processutils
 
@@ -30,6 +31,28 @@ def get_my_ip():
         return addr
     except socket.error:
         return None
+
+
+def get_ip(nic_name=None):
+    """Getting ip address by network interface name.
+
+    :param nic_name: interface name
+    :returns: ip address from interface or default ip
+    """
+    # TODO(mdovgal): add ipv6 support
+    if not nic_name:
+        return get_my_ip()
+
+    existing_ifaces = netifaces.interfaces()
+    if nic_name not in existing_ifaces:
+        raise exc.NicNotFound(iface=nic_name)
+
+    # get necessary iface information
+    iface = netifaces.ifaddresses(nic_name)
+    try:
+        return iface[netifaces.AF_INET][0]['addr']
+    except KeyError:
+        raise exc.IncorrectNic(iface=nic_name)
 
 
 def get_root_helper():

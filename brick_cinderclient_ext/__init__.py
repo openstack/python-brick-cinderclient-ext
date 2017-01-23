@@ -37,6 +37,8 @@ ENFORCE_MULTIPATH_HELP_MESSAGE = (
     'If enforce_multipath=True is specified too, an exception is thrown when '
     'multipathd is not running. Otherwise, it falls back to multipath=False '
     'and only the first path shown up is used.')
+NETWORK_INTERFACE_HELP_MESSAGE = ('Use a specific network interface to '
+                                  'determine IP address.')
 
 
 @utils.arg('--multipath',
@@ -47,12 +49,17 @@ ENFORCE_MULTIPATH_HELP_MESSAGE = (
            metavar='<enforce_multipath>',
            default=False,
            help=ENFORCE_MULTIPATH_HELP_MESSAGE)
+@utils.arg('--nic',
+           metavar='<nic>',
+           default=None,
+           help=NETWORK_INTERFACE_HELP_MESSAGE)
 @brick_utils.require_root
 def do_get_connector(client, args):
     """Get the connection properties for all protocols."""
     brickclient = brick_client.Client(client)
     connector = brickclient.get_connector(args.multipath,
-                                          args.enforce_multipath)
+                                          args.enforce_multipath,
+                                          args.nic)
     utils.print_dict(connector)
 
 

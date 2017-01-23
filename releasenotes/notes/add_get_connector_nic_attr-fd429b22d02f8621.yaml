@@ -1,0 +1,3 @@
+---
+features:
+  - Added attribute --nic to get-connector command.
