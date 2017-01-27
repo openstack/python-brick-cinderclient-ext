@@ -59,7 +59,6 @@ def do_get_connector(client, args):
 @utils.arg('identifier',
            metavar='<identifier>',
            help=VOLUME_ID_HELP_MESSAGE)
-@utils.service_type('volumev2')
 @utils.arg('--hostname',
            metavar='<hostname>',
            default=socket.gethostname(),
@@ -80,7 +79,6 @@ def do_get_connector(client, args):
            metavar='<enforce_multipath>',
            default=False,
            help=ENFORCE_MULTIPATH_HELP_MESSAGE)
-@utils.service_type('volumev2')
 @brick_utils.require_root
 def do_local_attach(client, args):
     hostname = args.hostname
@@ -115,7 +113,6 @@ def do_local_attach(client, args):
            metavar='<device_info>',
            default=None,
            help='The device_info is returned from connect_volume.')
-@utils.service_type('volumev2')
 @brick_utils.require_root
 def do_local_detach(client, args):
     volume = args.identifier
@@ -135,7 +132,6 @@ def do_local_detach(client, args):
            metavar='<multipath>',
            default=False,
            help=MULTIPATH_HELP_MESSAGE)
-@utils.service_type('volumev2')
 @brick_utils.require_root
 def do_get_volume_paths(client, args):
     """Get volume paths for a volume."""
@@ -155,7 +151,6 @@ def do_get_volume_paths(client, args):
            metavar='<protocol>',
            default='ISCSI',
            help='Connection protocol. ISCSI, FIBRE_CHANNEL, etc.')
-@utils.service_type('volumev2')
 @brick_utils.require_root
 def do_get_all_volume_paths(client, args):
     """Get all volume paths for a protocol."""
