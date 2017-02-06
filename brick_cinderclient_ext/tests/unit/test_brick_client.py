@@ -15,7 +15,7 @@ import mock
 from oslotest import base
 
 from brick_cinderclient_ext import client
-from cinderclient.v2.volumes import Volume
+from cinderclient.v2 import volumes
 
 
 class TestBrickClient(base.BaseTestCase):
@@ -31,7 +31,7 @@ class TestBrickClient(base.BaseTestCase):
         conn_data = {'key': 'value'}
         connection = {'driver_volume_type': protocol, 'data': conn_data}
         self.mock_vc.volumes.initialize_connection.return_value = connection
-        fake_vol = Volume(self, {
+        fake_vol = volumes.Volume(self, {
             'id': self.volume_id,
             'name': 'fake-volume',
             'status': 'in-use',
