@@ -7,3 +7,4 @@ python-brick-cinderclient-ext Release Notes
 
    newton
    unreleased
+   ocata
