@@ -12,6 +12,7 @@
 
 import ddt
 import mock
+import netifaces
 
 from cinderclient import exceptions as cinder_exceptions
 from os_brick import exception
@@ -47,14 +48,32 @@ class TestVolumeActions(base.BaseTestCase):
 
         self.v_client.volumes.reserve.assert_called_once_with(self.volume_id)
 
-    def test_initialize_connection(self):
-        self.brick_client.get_connector.return_value = None
-        with volume_actions.InitializeConnection(*self.command_args) as cmd:
-            cmd.initialize(self.brick_client, False, False)
+    @mock.patch('netifaces.ifaddresses',
+                return_value={netifaces.AF_INET: [{'addr': '127.0.0.1'}]})
+    @mock.patch('netifaces.interfaces', return_value=['eth1'])
+    @mock.patch('brick_cinderclient_ext.brick_utils.get_my_ip',
+                return_value='1.0.0.0')
+    @ddt.data((None,  {'ip': '1.0.0.0'}),
+              ('eth1', {'ip': '127.0.0.1'}))
+    @ddt.unpack
+    def test_initialize_connection(self, _nic, _conn_prop,
+                                   _fake_my_ip, _fake_interfaces,
+                                   _fake_ifaddresses):
+        """Test calling initialize_connection with different input params.
 
-        self.brick_client.get_connector.assert_called_once_with(False, False)
+        Contains next initialize connection test cases:
+        1. Without any additional parameters in request;
+        2. Using --nic as a parameter;
+        TODO (mdovgal): add other test cases;
+        """
+        self.brick_client.get_connector.return_value = _conn_prop
+        with volume_actions.InitializeConnection(*self.command_args) as cmd:
+            cmd.initialize(self.brick_client, False, False, _nic)
+
+        self.brick_client.get_connector.assert_called_once_with(False, False,
+                                                                _nic)
         self.v_client.volumes.initialize_connection.assert_called_once_with(
-            self.volume_id, None)
+            self.volume_id, _conn_prop)
 
     @ddt.data('iscsi', 'iSCSI', 'ISCSI', 'rbd', 'RBD')
     def test_verify_protocol(self, protocol):

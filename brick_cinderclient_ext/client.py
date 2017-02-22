@@ -66,8 +66,7 @@ class Client(object):
         return conn_prop
 
     def attach(self, volume_id, hostname, mountpoint=None, mode='rw',
-               multipath=False, enforce_multipath=False):
-
+               multipath=False, enforce_multipath=False, nic=None):
         # Check protocol type of storage backend.
         with actions.VerifyProtocol(self.volumes_client, volume_id) as cmd:
             # Retrieve vol-host attribute of volume.
@@ -84,7 +83,8 @@ class Client(object):
 
         with actions.InitializeConnection(
                 self.volumes_client, volume_id) as cmd:
-            connection = cmd.initialize(self, multipath, enforce_multipath)
+            connection = cmd.initialize(self, multipath, enforce_multipath,
+                                        nic)
 
         with actions.ConnectVolume(self.volumes_client, volume_id) as cmd:
             brick_connector = self._brick_get_connector(
@@ -95,14 +95,15 @@ class Client(object):
             return device_info
 
     def detach(self, volume_id, attachment_uuid=None, multipath=False,
-               enforce_multipath=False, device_info=None):
+               enforce_multipath=False, device_info=None, nic=None):
 
         with actions.BeginDetach(self.volumes_client, volume_id) as cmd:
             cmd.reserve()
 
         with actions.InitializeConnectionForDetach(
                 self.volumes_client, volume_id) as cmd:
-            connection = cmd.initialize(self, multipath, enforce_multipath)
+            connection = cmd.initialize(self, multipath, enforce_multipath,
+                                        nic)
 
         brick_connector = self._brick_get_connector(
             connection['driver_volume_type'], do_local_attach=True)

@@ -35,8 +35,9 @@ class Reserve(VolumeAction):
 
 
 class InitializeConnection(VolumeAction):
-    def initialize(self, brick_client, multipath, enforce_multipath):
-        conn_prop = brick_client.get_connector(multipath, enforce_multipath)
+    def initialize(self, brick_client, multipath, enforce_multipath, nic):
+        conn_prop = brick_client.get_connector(multipath, enforce_multipath,
+                                               nic)
         return self.volumes_client.volumes.initialize_connection(
             self.volume_id, conn_prop)
 
