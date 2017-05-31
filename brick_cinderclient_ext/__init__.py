@@ -16,14 +16,15 @@ Command-line interface to the os-brick.
 """
 
 from __future__ import print_function
+
 import json
 import socket
 
+from cinderclient import utils
 import pbr.version
 
 from brick_cinderclient_ext import brick_utils
 from brick_cinderclient_ext import client as brick_client
-from cinderclient import utils
 
 
 __version__ = pbr.version.VersionInfo(

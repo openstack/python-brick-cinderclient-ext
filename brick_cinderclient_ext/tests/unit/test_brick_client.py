@@ -12,7 +12,9 @@
 
 import mock
 
+from cinderclient import api_versions
 from oslotest import base
+from pbr import version as pbr_version
 
 from brick_cinderclient_ext import client
 
@@ -27,6 +29,7 @@ class TestBrickClient(base.BaseTestCase):
     def _init_fake_cinderclient(self, protocol):
         # Init fake cinderclient
         self.mock_vc = mock.Mock()
+        self.mock_vc.version_info = mock.Mock()
         conn_data = {'key': 'value'}
         connection = {'driver_volume_type': protocol, 'data': conn_data}
         self.mock_vc.volumes.initialize_connection.return_value = connection
@@ -80,6 +83,46 @@ class TestBrickClient(base.BaseTestCase):
                                           enforce_multipath=True,
                                           multipath=True,
                                           execute=mock_execute)
+
+    def test_client_use_new_attach_no_volumes_client(self):
+        brick_client = client.Client(None)
+        self.assertTrue(brick_client._use_legacy_attach)
+
+    @mock.patch('cinderclient.version_info.semantic_version')
+    def test_client_use_new_attach_v1_cinderclient(self,
+                                                   mock_semantic_version):
+        self._init_fake_cinderclient('iscsi')
+        mock_semantic_version.return_value = pbr_version.SemanticVersion(
+            major=1, minor=0)
+        self.client.volumes_client.version_info.semantic_version
+        brick_client = client.Client(self.client.volumes_client)
+        self.assertTrue(brick_client._use_legacy_attach)
+
+    @mock.patch('cinderclient.version_info.semantic_version')
+    def test_client_use_new_attach_v2_cinderclient_3_0(self,
+                                                       mock_semantic_version):
+        self._init_fake_cinderclient('iscsi')
+        mock_semantic_version.return_value = pbr_version.SemanticVersion(
+            major=2, minor=0)
+        self.client.volumes_client.version_info.semantic_version
+        current_api_version = api_versions.APIVersion("3.0")
+        self.client.volumes_client.api_version = current_api_version
+        brick_client = client.Client(self.client.volumes_client)
+
+        self.assertTrue(brick_client._use_legacy_attach)
+
+    @mock.patch('cinderclient.version_info.semantic_version')
+    def test_client_use_new_attach_v2_cinderclient_3_27(self,
+                                                        mock_semantic_version):
+        self._init_fake_cinderclient('iscsi')
+        mock_semantic_version.return_value = pbr_version.SemanticVersion(
+            major=2, minor=0)
+        self.client.volumes_client.version_info.semantic_version
+        current_api_version = api_versions.APIVersion("3.27")
+        self.client.volumes_client.api_version = current_api_version
+        brick_client = client.Client(self.client.volumes_client)
+
+        self.assertFalse(brick_client._use_legacy_attach)
 
     @mock.patch('os_brick.initiator.connector.get_connector_properties')
     def test_attach_iscsi(self, mock_conn_prop):

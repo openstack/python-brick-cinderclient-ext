@@ -39,3 +39,12 @@ class NicNotFound(BrickInterfaceException):
 class IncorrectNic(BrickInterfaceException):
     # TODO(mdovgal): change message after adding ipv6 support
     message = _("Network interface %(iface)s has not ipv4 address assigned.")
+
+
+class NoAttachmentsFound(BrickInterfaceException):
+    message = _("There were no attachments found for %(volume_id)s")
+
+
+class NeedAttachmentUUID(BrickInterfaceException):
+    message = _("Volume %(volume_id)s has more than one attachment. "
+                "Please pass in the attachment_uuid you wish to detach.")
