@@ -137,7 +137,9 @@ class Client(object):
         # We can use the new attach/detach workflow
         connector_properties = self.get_connector(
             multipath=multipath,
-            enforce_multipath=enforce_multipath, nic=nic)
+            enforce_multipath=enforce_multipath,
+            nic=nic
+        )
 
         instance_id = uuidutils.generate_uuid()
 
@@ -149,7 +151,10 @@ class Client(object):
             cmd.verify(connection['driver_volume_type'])
 
         brick_connector = self._brick_get_connector(
-            connection['driver_volume_type'], do_local_attach=True)
+            connection['driver_volume_type'],
+            do_local_attach=True,
+            use_multipath=multipath,
+        )
         device_info = brick_connector.connect_volume(connection)
         return device_info
 
@@ -181,7 +186,10 @@ class Client(object):
                                         nic)
 
         brick_connector = self._brick_get_connector(
-            connection['driver_volume_type'], do_local_attach=True)
+            connection['driver_volume_type'],
+            do_local_attach=True,
+            use_multipath=multipath,
+        )
 
         with actions.DisconnectVolume(self.volumes_client, volume_id) as cmd:
             cmd.disconnect(brick_connector, connection['data'], device_info)
