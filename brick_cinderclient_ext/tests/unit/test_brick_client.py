@@ -53,12 +53,11 @@ class TestBrickClient(base.BaseTestCase):
 
         return conn_props, mock_connect
 
-    @mock.patch('oslo_concurrency.processutils.execute')
     @mock.patch('brick_cinderclient_ext.brick_utils.get_my_ip')
     @mock.patch('brick_cinderclient_ext.brick_utils.get_root_helper')
     @mock.patch('os_brick.initiator.connector.get_connector_properties')
     def test_get_connector(self, mock_connector, mock_root_helper,
-                           mock_my_ip, mock_execute):
+                           mock_my_ip):
         mock_root_helper.return_value = 'root-helper'
         mock_my_ip.return_value = '1.0.0.0'
 
@@ -66,15 +65,13 @@ class TestBrickClient(base.BaseTestCase):
         mock_connector.assert_called_with('root-helper', '1.0.0.0',
                                           enforce_multipath=False,
                                           multipath=False,
-                                          execute=mock_execute)
+                                          execute=None)
 
-    @mock.patch('oslo_concurrency.processutils.execute')
     @mock.patch('brick_cinderclient_ext.brick_utils.get_my_ip')
     @mock.patch('brick_cinderclient_ext.brick_utils.get_root_helper')
     @mock.patch('os_brick.initiator.connector.get_connector_properties')
     def test_get_connector_with_multipath(self, mock_connector,
-                                          mock_root_helper, mock_my_ip,
-                                          mock_execute):
+                                          mock_root_helper, mock_my_ip):
         mock_root_helper.return_value = 'root-helper'
         mock_my_ip.return_value = '1.0.0.0'
 
@@ -82,7 +79,7 @@ class TestBrickClient(base.BaseTestCase):
         mock_connector.assert_called_with('root-helper', '1.0.0.0',
                                           enforce_multipath=True,
                                           multipath=True,
-                                          execute=mock_execute)
+                                          execute=None)
 
     def test_client_use_new_attach_no_volumes_client(self):
         brick_client = client.Client(None)

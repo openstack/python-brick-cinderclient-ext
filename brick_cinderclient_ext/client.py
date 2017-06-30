@@ -16,7 +16,6 @@ import cinderclient
 from cinderclient import api_versions
 from cinderclient import exceptions
 from os_brick.initiator import connector
-from oslo_concurrency import processutils
 from oslo_utils import uuidutils
 from pbr import version as pbr_version
 
@@ -56,7 +55,7 @@ class Client(object):
                 self._use_legacy_attach = False
 
     def _brick_get_connector(self, protocol, driver=None,
-                             execute=processutils.execute,
+                             execute=None,
                              use_multipath=False,
                              device_scan_attempts=3,
                              *args, **kwargs):
@@ -81,7 +80,7 @@ class Client(object):
             brick_utils.get_ip(nic),
             multipath=multipath,
             enforce_multipath=(enforce_multipath),
-            execute=processutils.execute)
+            execute=None)
         return conn_prop
 
     def attach(self, volume_id, hostname, mountpoint=None, mode='rw',
