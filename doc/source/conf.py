@@ -21,8 +21,8 @@ sys.path.insert(0, os.path.abspath('../..'))
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = [
     'sphinx.ext.autodoc',
-    'oslosphinx',
-    'reno.sphinxext'
+    'openstackdocstheme',
+    'reno.sphinxext',
 ]
 
 # autodoc generation is a bit aggressive and a nuisance when doing heavy
@@ -56,9 +56,15 @@ pygments_style = 'sphinx'
 # html_theme_path = ["."]
 # html_theme = '_theme'
 # html_static_path = ['static']
+html_theme = 'openstackdocs'
 
 # Output file base name for HTML help builder.
 htmlhelp_basename = '%sdoc' % project
+
+# If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
+# using the given strftime format.
+# html_last_updated_fmt = '%b %d, %Y'
+html_last_updated_fmt = '%Y-%m-%d %H:%M'
 
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass
@@ -72,3 +78,8 @@ latex_documents = [
 
 # Example configuration for intersphinx: refer to the Python standard library.
 #intersphinx_mapping = {'http://docs.python.org/': None}
+
+# -- Options for openstackdocstheme -------------------------------------------
+repository_name = 'openstack/python-brick-cinderclient-ext'
+bug_project = 'python-brick-cinderclient-ext'
+bug_tag = ''
