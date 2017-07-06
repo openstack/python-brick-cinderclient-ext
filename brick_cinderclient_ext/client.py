@@ -216,6 +216,19 @@ class Client(object):
                 # We have more than 1 attachment and we don't know which to use
                 raise exceptions.NeedAttachmentUUID(volume_id=volume_id)
 
+        attachment = self.volumes_client.attachments.show(attachment_uuid)
+
+        brick_connector = self._brick_get_connector(
+            attachment.connection_info['driver_volume_type'],
+            do_local_attach=True,
+            use_multipath=multipath,
+        )
+
+        with actions.DisconnectVolume(self.volumes_client, volume_id) as cmd:
+            cmd.disconnect(brick_connector,
+                           attachment.connection_info,
+                           device_info)
+
         self.volumes_client.attachments.delete(attachment_uuid)
 
     def get_volume_paths(self, volume_id, use_multipath=False):
