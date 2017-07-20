@@ -39,6 +39,6 @@ python-cinderclient::
 *  https://git.openstack.org/cgit/openstack/python-cinderclient
 
 * License: Apache License, Version 2.0
-* Documentation: http://docs.openstack.org/developer/python-brick-cinderclient-ext
-* Source: http://git.openstack.org/cgit/openstack/python-brick-cinderclient-ext
-* Bugs: http://bugs.launchpad.net/python-cinderclient
+* Documentation: https://docs.openstack.org/python-brick-cinderclient-ext/latest/
+* Source: https://git.openstack.org/cgit/openstack/python-brick-cinderclient-ext
+* Bugs: https://bugs.launchpad.net/python-cinderclient
