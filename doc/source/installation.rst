@@ -4,9 +4,9 @@ Installation
 
 At the command line::
 
-    $ pip install brick-python-cinderclient-ext
+    $ pip install python-brick-cinderclient-ext
 
 Or, if you have virtualenvwrapper installed::
 
-    $ mkvirtualenv brick-python-cinderclient-ext
-    $ pip install brick-python-cinderclient-ext
+    $ mkvirtualenv python-brick-cinderclient-ext
+    $ pip install python-brick-cinderclient-ext
