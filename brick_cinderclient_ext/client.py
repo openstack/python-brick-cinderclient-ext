@@ -49,7 +49,7 @@ class Client(object):
         current_version = cinderclient.version_info.semantic_version()
         if (self.volumes_client and current_version >= version_want):
             # We have a recent enough client to test the microversion we need.
-            required_version = api_versions.APIVersion("3.27")
+            required_version = api_versions.APIVersion("3.44")
             if self.volumes_client.api_version.matches(required_version):
                 # we can use the new attach/detach API
                 self._use_legacy_attach = False
@@ -156,6 +156,9 @@ class Client(object):
             use_multipath=multipath,
         )
         device_info = brick_connector.connect_volume(connection)
+        # MV 3.44 requires this step to move the volume to 'in-use'.
+        self.volumes_client.attachments.complete(
+            info['connection_info']['attachment_id'])
         return device_info
 
     def detach(self, volume_id, attachment_uuid=None, multipath=False,

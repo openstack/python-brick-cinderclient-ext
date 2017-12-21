@@ -109,13 +109,13 @@ class TestBrickClient(base.BaseTestCase):
         self.assertTrue(brick_client._use_legacy_attach)
 
     @mock.patch('cinderclient.version_info.semantic_version')
-    def test_client_use_new_attach_v2_cinderclient_3_27(self,
+    def test_client_use_new_attach_v2_cinderclient_3_44(self,
                                                         mock_semantic_version):
         self._init_fake_cinderclient('iscsi')
         mock_semantic_version.return_value = pbr_version.SemanticVersion(
             major=2, minor=0)
         self.client.volumes_client.version_info.semantic_version
-        current_api_version = api_versions.APIVersion("3.27")
+        current_api_version = api_versions.APIVersion("3.44")
         self.client.volumes_client.api_version = current_api_version
         brick_client = client.Client(self.client.volumes_client)
 
