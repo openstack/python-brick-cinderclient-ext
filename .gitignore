@@ -4,6 +4,10 @@
 # C extensions
 *.so
 
+# Things to include
+!.gitignore
+!.zuul.yaml
+
 # Packages
 *.egg
 *.egg-info
