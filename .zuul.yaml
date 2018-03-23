@@ -18,6 +18,29 @@
         ceilometer-anotification: false
         ceilometer-api: false
         ceilometer-collector: false
+        # turn off swift
+        s-account: false
+        s-container: false
+        s-object: false
+        s-proxy: false
+        # turn off glance
+        g-api: false
+        g-reg: false
+        # turn off nova
+        n-api: false
+        n-api-meta: false
+        n-cauth: false
+        n-cond: false
+        n-cpu: false
+        n-novnc: false
+        n-obj: false
+        n-sch: false
+        placement-api: false
+        # turn off misc
+        horizon: false
+        tempest: false
+        tls-proxy: false
+        c-bak: false
       # Hardcode brick-cinderclient path so the job can be run on other repo patches
       zuul_work_dir: src/git.openstack.org/openstack/python-brick-cinderclient-ext
 
