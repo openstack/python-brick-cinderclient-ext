@@ -48,6 +48,8 @@
     check:
       jobs:
         - brick-cinderclient-dsvm-functional
+        - openstack-tox-lower-constraints
     gate:
       jobs:
         - brick-cinderclient-dsvm-functional
+        - openstack-tox-lower-constraints
