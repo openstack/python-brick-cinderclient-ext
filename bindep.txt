@@ -3,5 +3,5 @@
 # see http://docs.openstack.org/infra/bindep/ for additional information.
 
 open-iscsi [platform:dpkg]
-iscsi-initiator-utils [platform: rpm]
-udev [platform: dpkg rpm]
+iscsi-initiator-utils [platform:rpm]
+udev [platform:dpkg platform:rpm]
