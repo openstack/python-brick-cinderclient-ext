@@ -4,7 +4,7 @@
    contain the root `toctree` directive.
 
 Welcome to brick-python-cinderclient-ext's documentation!
-========================================================
+=========================================================
 
 Contents:
 
