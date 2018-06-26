@@ -65,6 +65,12 @@ class ConnectVolume(VolumeAction):
                 mountpoint, mode, hostname):
         device_info = brick_connector.connect_volume(connection_data)
 
+        # NOTE(flaper87): mountpoint doesn't seem to be used at all, we should
+        # perhaps consider removing it from the connect args. Unsure whether
+        # `path` exists for all the different drivers so, using the value of
+        # `mountpoint` as the default.
+        mountpoint = device_info.get('path', mountpoint)
+
         self.volumes_client.volumes.attach(self.volume_id, instance_uuid=None,
                                            mountpoint=mountpoint,
                                            mode=mode,
