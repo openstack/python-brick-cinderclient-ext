@@ -42,3 +42,4 @@ python-cinderclient::
 * Documentation: https://docs.openstack.org/python-brick-cinderclient-ext/latest/
 * Source: https://git.openstack.org/cgit/openstack/python-brick-cinderclient-ext
 * Bugs: https://bugs.launchpad.net/python-cinderclient
+* Release notes: https://docs.openstack.org/releasenotes/python-brick-cinderclient-ext
