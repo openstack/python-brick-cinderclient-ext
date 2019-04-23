@@ -35,11 +35,11 @@ NOTE (e0ne): current version is tested only on Linux hosts
 For any other information, refer to the parent projects, Cinder and
 python-cinderclient::
 
-*  https://git.openstack.org/cgit/openstack/cinder
-*  https://git.openstack.org/cgit/openstack/python-cinderclient
+*  https://opendev.org/openstack/cinder
+*  https://opendev.org/openstack/python-cinderclient
 
 * License: Apache License, Version 2.0
 * Documentation: https://docs.openstack.org/python-brick-cinderclient-ext/latest/
-* Source: https://git.openstack.org/cgit/openstack/python-brick-cinderclient-ext
+* Source: https://opendev.org/openstack/python-brick-cinderclient-ext
 * Bugs: https://bugs.launchpad.net/python-cinderclient
 * Release notes: https://docs.openstack.org/releasenotes/python-brick-cinderclient-ext
