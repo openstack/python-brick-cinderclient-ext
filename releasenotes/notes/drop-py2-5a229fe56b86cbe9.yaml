@@ -1,0 +1,6 @@
+---
+upgrade:
+  - |
+    Python 2.7 support has been dropped. Beginning with
+    python-brick-cinderclient-ext release 1.0.0, the minimum version
+    of Python supported is Python 3.6.
