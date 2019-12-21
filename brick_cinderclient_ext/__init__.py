@@ -11,9 +11,7 @@
 # under the License.
 
 
-"""
-Command-line interface to the os-brick.
-"""
+"""Command-line interface to the os-brick."""
 
 from __future__ import print_function
 
@@ -173,6 +171,7 @@ def do_get_all_volume_paths(client, args):
     paths = brickclient.get_all_volume_paths(args.protocol, args.multipath)
     if paths:
         print('\n'.join(paths))
+
 
 manager_class = brick_client.Client
 name = 'brick_local_volume_management'
