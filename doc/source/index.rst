@@ -14,7 +14,7 @@ Contents:
    readme
    installation
    usage
-   contributing
+   contributor/contributing
 
 Indices and tables
 ==================

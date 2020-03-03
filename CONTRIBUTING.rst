@@ -1,17 +1,25 @@
-If you would like to contribute to the development of OpenStack, you must
-follow the steps in this page:
+The source repository for this project can be found at:
 
-   https://docs.openstack.org/infra/manual/developers.html
+  https://opendev.org/openstack/python-brick-cinderclient-ext
 
-If you already have a good understanding of how the system works and your
-OpenStack accounts are set up, you can skip to the development workflow
-section of this documentation to learn how changes to OpenStack should be
-submitted for review via the Gerrit tool:
+Pull requests submitted through GitHub are not monitored.
 
-   https://docs.openstack.org/infra/manual/developers.html#development-workflow
+To start contributing to OpenStack, follow the steps in the contribution guide
+to set up and use Gerrit:
 
-Pull requests submitted through GitHub will be ignored.
+  https://docs.openstack.org/contributors/code-and-documentation/quick-start.html
 
-Bugs should be filed on Launchpad, not GitHub:
+Bugs should be filed on Launchpad:
 
-   https://bugs.launchpad.net/brick-python-cinderclient-ext
+  https://bugs.launchpad.net/python-cinderclient
+
+  .. note::
+     When creating a bug, please tag it with 'brick-cinderclient-ext'.
+     To create a tag, select the 'Extra options' after filling in the
+     bug description and type **brick-cinderclient-ext** in the 'Tags'
+     text box.
+
+For more specific information about contributing to this repository, see the
+python-brick-cinderclient-ext contributor guide:
+
+  https://docs.openstack.org/python-brick-cinderclient-ext/latest/contributor/contributing.html
