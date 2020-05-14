@@ -9,6 +9,7 @@ cmd2==0.8.1
 coverage==4.0
 ddt==1.0.1
 debtcollector==1.19.0
+doc8==0.6.0
 docutils==0.14
 dulwich==0.19.0
 enum-compat==0.0.2
