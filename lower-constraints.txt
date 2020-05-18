@@ -34,7 +34,6 @@ mox3==0.25.0
 msgpack==0.5.6
 netaddr==0.7.19
 netifaces==0.10.6
-openstackdocstheme==1.20.0
 os-brick==2.5.0
 os-client-config==1.29.0
 os-testr==1.0.0
@@ -66,7 +65,6 @@ python-mimeparse==1.6.0
 python-subunit==1.2.0
 pytz==2018.3
 PyYAML==3.12
-reno==2.7.0
 repoze.lru==0.7
 requests==2.18.4
 requestsexceptions==1.4.0
@@ -76,8 +74,6 @@ Routes==2.4.1
 simplejson==3.13.2
 six==1.11.0
 snowballstemmer==1.2.1
-Sphinx==1.6.5
-sphinxcontrib-websupport==1.0.1
 stestr==1.0.0
 stevedore==1.28.0
 testscenarios==0.4

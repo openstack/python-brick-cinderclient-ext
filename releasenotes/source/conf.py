@@ -92,7 +92,7 @@ exclude_patterns = []
 # show_authors = False
 
 # The name of the Pygments (syntax highlighting) style to use.
-pygments_style = 'sphinx'
+pygments_style = 'native'
 
 # A list of ignored prefixes for module index sorting.
 # modindex_common_prefix = []
@@ -141,10 +141,6 @@ html_static_path = ['_static']
 # directly to the root of the documentation.
 # html_extra_path = []
 
-# If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
-# using the given strftime format.
-# html_last_updated_fmt = '%b %d, %Y'
-
 # If true, SmartyPants will be used to convert quotes and dashes to
 # typographically correct entities.
 # html_use_smartypants = True
@@ -188,7 +184,6 @@ htmlhelp_basename = 'BrickCinderclientExtNotesdoc'
 # If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
 # using the given strftime format.
 # html_last_updated_fmt = '%b %d, %Y'
-html_last_updated_fmt = '%Y-%m-%d %H:%M'
 
 # -- Options for LaTeX output ---------------------------------------------
 
@@ -276,6 +271,7 @@ texinfo_documents = [
 locale_dirs = ['locale/']
 
 # -- Options for openstackdocstheme -------------------------------------------
-repository_name = 'openstack/python-brick-cinderclient-ext'
-bug_project = 'python-brick-cinderclient-ext'
-bug_tag = ''
+openstackdocs_repo_name = 'openstack/python-brick-cinderclient-ext'
+openstackdocs_bug_project = 'python-brick-cinderclient-ext'
+openstackdocs_bug_tag = ''
+openstackdocs_auto_name = False

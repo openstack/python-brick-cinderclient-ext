@@ -47,7 +47,7 @@ add_function_parentheses = True
 add_module_names = True
 
 # The name of the Pygments (syntax highlighting) style to use.
-pygments_style = 'sphinx'
+pygments_style = 'native'
 
 # -- Options for HTML output --------------------------------------------------
 
@@ -60,11 +60,6 @@ html_theme = 'openstackdocs'
 
 # Output file base name for HTML help builder.
 htmlhelp_basename = '%sdoc' % project
-
-# If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
-# using the given strftime format.
-# html_last_updated_fmt = '%b %d, %Y'
-html_last_updated_fmt = '%Y-%m-%d %H:%M'
 
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass
@@ -80,6 +75,6 @@ latex_documents = [
 #intersphinx_mapping = {'http://docs.python.org/': None}
 
 # -- Options for openstackdocstheme -------------------------------------------
-repository_name = 'openstack/python-brick-cinderclient-ext'
-bug_project = 'python-brick-cinderclient-ext'
-bug_tag = ''
+openstackdocs_repo_name = 'openstack/python-brick-cinderclient-ext'
+openstackdocs_bug_project = 'python-brick-cinderclient-ext'
+openstackdocs_bug_tag = ''
