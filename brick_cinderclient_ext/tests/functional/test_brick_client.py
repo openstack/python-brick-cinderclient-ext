@@ -10,11 +10,12 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
+import configparser
 import os
 
 from cinderclient import client as c_client
 from oslotest import base
-import six
+
 
 from brick_cinderclient_ext import client
 
@@ -38,7 +39,7 @@ def credentials():
     tenant_name = os.environ.get('OS_TENANT_NAME')
     auth_url = os.environ.get('OS_AUTH_URL')
 
-    config = six.moves.configparser.RawConfigParser()
+    config = configparser.RawConfigParser()
     if config.read(_CREDS_FILE):
         username = username or config.get('admin', 'user')
         password = password or config.get('admin', 'pass')
