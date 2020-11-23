@@ -52,10 +52,10 @@
       tox_envlist: functional-py36
 
 - job:
-    name: brick-cinderclient-dsvm-functional-py37
+    name: brick-cinderclient-dsvm-functional-py38
     parent: brick-cinderclient-dsvm-functional-base
     vars:
-      tox_envlist: functional-py37
+      tox_envlist: functional-py38
 
 - project:
     templates:
@@ -67,8 +67,8 @@
     check:
       jobs:
         - brick-cinderclient-dsvm-functional-py36
-        - brick-cinderclient-dsvm-functional-py37
+        - brick-cinderclient-dsvm-functional-py38
     gate:
       jobs:
         - brick-cinderclient-dsvm-functional-py36
-        - brick-cinderclient-dsvm-functional-py37
+        - brick-cinderclient-dsvm-functional-py38
