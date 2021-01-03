@@ -55,8 +55,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'python-brick-cinderclient-ext Release Notes'
-copyright = u'2016, Cinder Developers'
+project = 'python-brick-cinderclient-ext Release Notes'
+copyright = '2016, Cinder Developers'
 
 # Release notes are unversioned and do not need version and release set
 version = ''
@@ -203,8 +203,8 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
     ('index', 'BrickCinderclientExtReleaseNotes.tex',
-     u'os-brick Cinderclient Extension Release Notes Documentation',
-     u'Cinder Developers', 'manual'),
+     'os-brick Cinderclient Extension Release Notes Documentation',
+     'Cinder Developers', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -234,8 +234,8 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     ('index', 'osbrickreleasenotes',
-     u'OS-Brick Release Notes Documentation',
-     [u'Cinder Developers'], 1)
+     'OS-Brick Release Notes Documentation',
+     ['Cinder Developers'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -249,8 +249,8 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
     ('index', 'BrickCinderclientExtReleaseNotes',
-     u'os-brick Cinderclient Extension Release Notes Documentation',
-     u'Cinder Developers', 'BrickCinderclientExtReleaseNotes',
+     'os-brick Cinderclient Extension Release Notes Documentation',
+     'Cinder Developers', 'BrickCinderclientExtReleaseNotes',
      'python-cinderclient extension for local storage management.',
      'Miscellaneous'),
 ]
