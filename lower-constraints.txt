@@ -35,7 +35,7 @@ msgpack==0.5.6
 netaddr==0.7.19
 netifaces==0.10.6
 openstackdocstheme==1.20.0
-os-brick==2.5.0
+os-brick==2.10.0
 os-client-config==1.29.0
 os-testr==1.0.0
 os-win==4.0.0
@@ -60,7 +60,7 @@ Pygments==2.2.0
 pyinotify==0.9.6
 pyparsing==2.2.0
 pyperclip==1.6.0
-python-cinderclient==3.3.0
+python-cinderclient==5.0.0
 python-dateutil==2.7.0
 python-mimeparse==1.6.0
 python-subunit==1.2.0
@@ -76,7 +76,7 @@ Routes==2.4.1
 simplejson==3.13.2
 six==1.11.0
 snowballstemmer==1.2.1
-Sphinx==1.6.5
+Sphinx==1.8.0
 sphinxcontrib-websupport==1.0.1
 stestr==1.0.0
 stevedore==1.28.0
