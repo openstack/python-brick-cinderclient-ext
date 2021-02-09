@@ -30,7 +30,7 @@ Optional dependencies based on Cinder driver's protocol::
 
 * open-iscsi, udev - for volume attachment via iSCSI
 
-NOTE (e0ne): current version is tested only on Linux hosts
+NOTE (e0ne): current version is tested on Linux and Windows hosts
 
 For any other information, refer to the parent projects, Cinder and
 python-cinderclient::

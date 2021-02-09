@@ -62,7 +62,7 @@ def get_root_helper():
 
 def require_root(f):
     def wrapper(*args, **kwargs):
-        if os.getuid() != 0:
+        if hasattr(os, 'getuid') and os.getuid() != 0:
             raise exceptions.CommandError(
                 "This command requires root permissions.")
         return f(*args, **kwargs)
