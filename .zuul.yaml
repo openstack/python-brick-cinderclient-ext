@@ -48,13 +48,17 @@
 - job:
     name: brick-cinderclient-dsvm-functional-py36
     parent: brick-cinderclient-dsvm-functional-base
+    # need to specify a platform that has python 3.6 available
+    nodeset: devstack-single-node-centos-8-stream
     vars:
+      python_version: 3.6
       tox_envlist: functional-py36
 
 - job:
     name: brick-cinderclient-dsvm-functional-py38
     parent: brick-cinderclient-dsvm-functional-base
     vars:
+      python_version: 3.8
       tox_envlist: functional-py38
 
 - project:
