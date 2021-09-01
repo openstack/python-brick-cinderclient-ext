@@ -40,7 +40,6 @@
         # turn off misc
         horizon: false
         tempest: false
-        tls-proxy: false
         c-bak: false
       # Hardcode brick-cinderclient path so the job can be run on other repo patches
       zuul_work_dir: src/opendev.org/openstack/python-brick-cinderclient-ext
