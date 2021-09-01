@@ -58,7 +58,7 @@ class BrickClientTests(base.BaseTestCase):
     def setUp(self):
         super(BrickClientTests, self).setUp()
         creds = credentials()
-        self.cinder_client = c_client.Client(2,
+        self.cinder_client = c_client.Client(3,
                                              creds['username'],
                                              creds['password'],
                                              creds['tenant_name'],
