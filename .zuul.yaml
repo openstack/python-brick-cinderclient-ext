@@ -45,13 +45,13 @@
       zuul_work_dir: src/opendev.org/openstack/python-brick-cinderclient-ext
 
 - job:
-    name: brick-cinderclient-dsvm-functional-py36
+    name: brick-cinderclient-dsvm-functional-py38
     parent: brick-cinderclient-dsvm-functional-base
-    # need to specify a platform that has python 3.6 available
-    nodeset: devstack-single-node-centos-8-stream
+    # need to specify a platform that has python 3.8 available
+    nodeset: openstack-single-node-focal
     vars:
-      python_version: 3.6
-      tox_envlist: functional-py36
+      python_version: 3.8
+      tox_envlist: functional-py38
 
 - job:
     name: brick-cinderclient-dsvm-functional-py39
@@ -64,14 +64,14 @@
 - project:
     templates:
       - check-requirements
-      - openstack-python3-yoga-jobs
+      - openstack-python3-zed-jobs
       - publish-openstack-docs-pti
       - release-notes-jobs-python3
     check:
       jobs:
-        - brick-cinderclient-dsvm-functional-py36
+        - brick-cinderclient-dsvm-functional-py38
         - brick-cinderclient-dsvm-functional-py39
     gate:
       jobs:
-        - brick-cinderclient-dsvm-functional-py36
+        - brick-cinderclient-dsvm-functional-py38
         - brick-cinderclient-dsvm-functional-py39
