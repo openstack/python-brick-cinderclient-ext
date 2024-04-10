@@ -53,13 +53,13 @@
       tox_envlist: functional-py39
 
 - job:
-    name: brick-cinderclient-dsvm-functional-py310
+    name: brick-cinderclient-dsvm-functional-py311
     parent: brick-cinderclient-dsvm-functional-base
-    # python 3.10 is the default in ubuntu 22.04 (jammy)
-    nodeset: openstack-single-node-jammy
+    # use debian bookworm, where py3.11 is the default
+    nodeset: devstack-single-node-debian-bookworm
     vars:
-      python_version: 3.10
-      tox_envlist: functional-py310
+      python_version: 3.11
+      tox_envlist: functional-py311
 
 - project:
     templates:
@@ -70,8 +70,8 @@
     check:
       jobs:
         - brick-cinderclient-dsvm-functional-py39
-        - brick-cinderclient-dsvm-functional-py310
+        - brick-cinderclient-dsvm-functional-py311
     gate:
       jobs:
         - brick-cinderclient-dsvm-functional-py39
-        - brick-cinderclient-dsvm-functional-py310
+        - brick-cinderclient-dsvm-functional-py311
