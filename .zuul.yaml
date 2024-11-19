@@ -53,13 +53,11 @@
       tox_envlist: functional-py39
 
 - job:
-    name: brick-cinderclient-dsvm-functional-py311
+    name: brick-cinderclient-dsvm-functional-py312
     parent: brick-cinderclient-dsvm-functional-base
-    # use debian bookworm, where py3.11 is the default
-    nodeset: devstack-single-node-debian-bookworm
     vars:
-      python_version: 3.11
-      tox_envlist: functional-py311
+      python_version: 3.12
+      tox_envlist: functional-py312
 
 - project:
     templates:
@@ -70,8 +68,8 @@
     check:
       jobs:
         - brick-cinderclient-dsvm-functional-py39
-        - brick-cinderclient-dsvm-functional-py311
+        - brick-cinderclient-dsvm-functional-py312
     gate:
       jobs:
         - brick-cinderclient-dsvm-functional-py39
-        - brick-cinderclient-dsvm-functional-py311
+        - brick-cinderclient-dsvm-functional-py312
