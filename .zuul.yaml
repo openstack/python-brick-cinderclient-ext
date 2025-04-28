@@ -45,12 +45,13 @@
       zuul_work_dir: src/opendev.org/openstack/python-brick-cinderclient-ext
 
 - job:
-    name: brick-cinderclient-dsvm-functional-py39
+    name: brick-cinderclient-dsvm-functional-py310
     parent: brick-cinderclient-dsvm-functional-base
-    nodeset: devstack-single-node-centos-9-stream
+    # Python 3.10 is the default on Ubuntu 22.04 (Jammy)
+    nodeset: openstack-single-node-jammy
     vars:
-      python_version: 3.9
-      tox_envlist: functional-py39
+      python_version: 3.10
+      tox_envlist: functional-py310
 
 - job:
     name: brick-cinderclient-dsvm-functional-py312
@@ -67,9 +68,9 @@
       - release-notes-jobs-python3
     check:
       jobs:
-        - brick-cinderclient-dsvm-functional-py39
+        - brick-cinderclient-dsvm-functional-py310
         - brick-cinderclient-dsvm-functional-py312
     gate:
       jobs:
-        - brick-cinderclient-dsvm-functional-py39
+        - brick-cinderclient-dsvm-functional-py310
         - brick-cinderclient-dsvm-functional-py312
