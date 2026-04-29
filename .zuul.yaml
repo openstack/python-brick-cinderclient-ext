@@ -49,18 +49,14 @@
       zuul_work_dir: src/opendev.org/openstack/python-brick-cinderclient-ext
 
 - job:
-    name: brick-cinderclient-dsvm-functional-py310
+    name: brick-cinderclient-dsvm-functional-py311
     parent: brick-cinderclient-dsvm-functional-base
-    # Python 3.10 is the default on Ubuntu 22.04 (Jammy)
-    nodeset: openstack-single-node-jammy
+    # Python 3.11 is the default on Debian Bookworm
+    nodeset: devstack-single-node-debian-bookworm
     vars:
-      devstack_localrc:
-        # current master devstack no longer supports jammy as a platform
-        # (change I796eddac96313584f4a), so we must force install it
-        FORCE: 'yes'
-      bindep_profile: test py310
-      python_version: '3.10'
-      tox_envlist: functional-py310
+      bindep_profile: test py311
+      python_version: '3.11'
+      tox_envlist: functional-py311
 
 - job:
     name: brick-cinderclient-dsvm-functional-py313
@@ -80,16 +76,15 @@
       - release-notes-jobs-python3
     check:
       jobs:
-        - brick-cinderclient-dsvm-functional-py310:
-            # non-voting because devstack support on python 3.10
-            # is no longer tested (see change I796eddac96313584f4a)
-            voting: false
+        - brick-cinderclient-dsvm-functional-py311
         - brick-cinderclient-dsvm-functional-py313
     periodic-weekly:
       jobs:
         - openstack-tox-pep8:
             branches: master
-        - openstack-tox-py310:
+        - openstack-tox-py311:
+            branches: master
+        - openstack-tox-py312:
             branches: master
         - openstack-tox-py313:
             branches: master
@@ -101,8 +96,11 @@
             vars:
               sphinx_python: python3
             branches: master
+        - python-cinderclient-functional-py311:
+            branches: master
         - python-cinderclient-functional-py313:
             branches: master
     gate:
       jobs:
+        - brick-cinderclient-dsvm-functional-py311
         - brick-cinderclient-dsvm-functional-py313
